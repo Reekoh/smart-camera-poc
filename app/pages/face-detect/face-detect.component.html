@@ -1,0 +1,57 @@
+<ActionBar title="reekoh">
+  <StackLayout orientation="horizontal" horizontalAlignment="center" width="100%">
+    <Image src="res://logo_white_blue" class="action-image" ></Image>
+  </StackLayout>
+</ActionBar>
+<ActivityIndicator busy="{{ isBusy }}" width="35" height="35" zIndex="100"></ActivityIndicator>
+<GridLayout rows="auto, *, 60" horizontalAlignment="center" stretch="aspectFill">
+    
+    <StackLayout row="0" class="p">
+        <Image #imgCapture id="img-capture" src="http://i.istockimg.com/file_thumbview_approve/88215527/6/stock-photo-88215527-it-s-not-a-job-when-you-love-what-you-do.jpg" stretch="aspectFill"></Image>        
+    </StackLayout>
+    <StackLayout row="1" orientation="vertical" verticalAlignment="center">
+        <StackLayout orientation="horizontal" horizontalAlignment="center" marginBottom="10">
+            <StackLayout width="50%">
+                <Label text="age" class="result-lbl age-lbl"></Label>            
+            </StackLayout>
+            <StackLayout width="50%">
+                <Label  [text]="faceDetectResult.age" class="age" 
+                    [ngClass]="{'age-male': faceDetectResult.gender === 'male', 'age-female': faceDetectResult.gender === 'female'}">
+                </Label>                
+            </StackLayout>
+        </StackLayout>
+
+        <StackLayout orientation="horizontal" horizontalAlignment="center" marginBottom="10">
+            <StackLayout width="50%">
+                <Label text="gender" class="result-lbl"></Label>                
+            </StackLayout>
+            <StackLayout width="50%" orientation="horizontal">
+                <Image #genderImg id="gender-img" src="res://{{faceDetectResult.gender === 'male' ? 'male' : 'female' }}_symbol"></Image>
+                <Label [text]="faceDetectResult.gender" class="gender"
+                    [ngClass]="{'gender-male': faceDetectResult.gender === 'male',
+                    'gender-female': faceDetectResult.gender === 'female'}">
+                </Label>                        
+            </StackLayout>
+        </StackLayout>
+
+        <StackLayout orientation="horizontal" horizontalAlignment="center" marginBottom="10">
+            <StackLayout width="50%">
+                <Label text="emotion" class="result-lbl"></Label>                
+            </StackLayout>
+            <StackLayout width="50%" orientation="horizontal">
+                <Image #emotionImg id="emotion-img" src="res://{{ faceDetectResult.emotion }}_{{faceDetectResult.gender === 'male'? 'blue' :  'pink'}} "></Image>                
+                <Label [text]="faceDetectResult.emotion" class="emotion"
+                    [ngClass]="{'emotion-male': faceDetectResult.gender === 'male',
+                    'emotion-female': faceDetectResult.gender === 'female'}" width="100%">
+                </Label>                
+            </StackLayout>
+        </StackLayout>
+        
+    </StackLayout>
+    <StackLayout class="p" row="2">
+        <Button #tryAgainBtn class="try-again" src="res://tryagain_icon"
+            [ngClass]="{'try-again-female': faceDetectResult.gender === 'female',
+                'try-again-male': faceDetectResult.gender === 'male'}"
+            text="TRY AGAIN" (tap)="capture()" horizontalAlignment="stretch"></Button>
+    </StackLayout>
+</GridLayout>
